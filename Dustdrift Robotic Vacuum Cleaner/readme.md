@@ -9,7 +9,6 @@ Team Members
 
 This project was a collaborative effort by the following team members:
 
-Akash Gupta (MBA24026) - mba24026@iimj.ac.in
 Diya Pal (MBA24081) - mba24081@iimj.ac.in
 K Siva Ram Prakhash (MBA24123) - mba24123@iimj.ac.in
 Mayank Verma (MBA24150) - mba24150@iimj.ac.in
