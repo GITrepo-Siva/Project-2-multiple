@@ -1,0 +1,86 @@
+Objective:
+Create a chatbot that can answer questions about healthy food, diet, and nutrition using GPT-4All and Python on a MacBook Air M2. 
+This chatbot will serve the B2C segment of the startup for providing meal and nutrition-related insights.
+
+
+Prerequisites:
+Python (Ensure Python 3.x is installed).
+GPT-4All model: We will use the GPT-4All model (a smaller version of GPT-4 that works well with local setups).
+Install necessary Python packages:
+gpt4all for handling GPT-4All model in Python.
+
+Step 1: Setup the Project Directory
+Create a folder for your chatbot project:
+
+mkdir ~/chatbot
+cd ~/chatbot
+
+Step 2: Download the Model
+Visit HuggingFace GPT-4All model page and download the model file ggml-nomic-ai-gpt4all-falcon-Q4_0.gguf. (search for this in your browser and download from 
+hugging face)
+Place the downloaded model file in the ~/chatbot/models/ directory.
+
+Step 3: Install Required Python Packages
+You need to install the gpt4all package to interact with the GPT-4All model. Run:
+
+pip install gpt4all
+
+
+Step 4: Create chatbot.py
+Open a terminal and create a new Python file:
+
+nano chatbot.py
+
+
+Then paste the following code into the file:
+import gpt4all
+
+# Set the path to your model
+model_path = "/Users/user/location/ggml-nomic-ai-gpt4all-falcon-Q4_0.gguf" (# use the location of the downloaded file)
+ 
+# Initialize the model
+llama = gpt4all.GPT4All(model_path)
+
+def ask_question(question):
+    # Get the response from the model using the generate method
+    response = llama.generate(question, max_tokens=150)
+
+    # Retry logic to handle cut-off responses, with a limit of 3 retries
+    retries = 0
+    while len(response.split()) < 20 and retries < 3:  # Adjust the retry condition
+        print("Response was cut off, generating more text...")
+        response = llama.generate(question, max_tokens=150)
+        retries += 1
+
+    if retries == 3:
+        return "Sorry, I couldn't provide a complete answer. Please try again."
+
+    return response.strip()
+
+# Main loop to ask questions
+while True:
+    question = input("You: ")
+    if question.lower() == 'exit':
+        print("Exiting the chatbot. Goodbye!")
+        break
+
+    # Get the chatbot's response
+    response = ask_question(question)
+    
+    # Print the response
+    print("Chatbot:", response)
+
+
+Step 5: Save and Run the Code
+After pasting the code into the chatbot.py file in nano, press CTRL + O to save and CTRL + X to exit.
+To run the chatbot, execute:
+
+python3 chatbot.py
+
+
+Step 6: Test the Chatbot
+You can now interact with the chatbot by typing your questions into the terminal, such as:
+
+"What are the top 3 fruits with the highest protein content?"
+"Can you plan a healthy meal for tomorrow?"
+
